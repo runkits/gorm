@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/runkits/gorm/examples/conf"
+	"github.com/runkits/gorm/examples/dal"
+	"github.com/runkits/gorm/examples/dal/model"
 	"gorm.io/gen"
-	"gorm.io/gen/examples/conf"
-	"gorm.io/gen/examples/dal"
-	"gorm.io/gen/examples/dal/model"
 	"gorm.io/gorm"
 )
 

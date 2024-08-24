@@ -13,8 +13,8 @@ var (
 		"gorm.io/gorm/clause",
 		"",
 		"gorm.io/gen",
-		"gorm.io/gen/field",
-		"gorm.io/gen/helper",
+		"github.com/runkits/gorm/field",
+		"github.com/runkits/gorm/helper",
 		"",
 		"gorm.io/plugin/dbresolver",
 	)

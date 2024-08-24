@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/runkits/gorm/examples/conf"
+	"github.com/runkits/gorm/examples/dal"
 	"gorm.io/gen"
-	"gorm.io/gen/examples/conf"
-	"gorm.io/gen/examples/dal"
 )
 
 func init() {

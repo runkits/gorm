@@ -19,12 +19,12 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 
-	"gorm.io/gen/helper"
-	"gorm.io/gen/internal/generate"
-	"gorm.io/gen/internal/model"
-	"gorm.io/gen/internal/parser"
-	tmpl "gorm.io/gen/internal/template"
-	"gorm.io/gen/internal/utils/pools"
+	"github.com/runkits/gorm/helper"
+	"github.com/runkits/gorm/internal/generate"
+	"github.com/runkits/gorm/internal/model"
+	"github.com/runkits/gorm/internal/parser"
+	tmpl "github.com/runkits/gorm/internal/template"
+	"github.com/runkits/gorm/internal/utils/pools"
 )
 
 // T generic type

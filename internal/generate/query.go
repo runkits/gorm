@@ -9,9 +9,9 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 
-	"gorm.io/gen/field"
-	"gorm.io/gen/internal/model"
-	"gorm.io/gen/internal/parser"
+	"github.com/runkits/gorm/field"
+	"github.com/runkits/gorm/internal/model"
+	"github.com/runkits/gorm/internal/parser"
 )
 
 type FieldParser interface {

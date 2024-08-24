@@ -12,11 +12,11 @@ import (
 	"gorm.io/gorm/schema"
 
 	"gorm.io/gen"
-	"gorm.io/gen/field"
+	"github.com/runkits/gorm/field"
 
 	"gorm.io/plugin/dbresolver"
 
-	"gorm.io/gen/tests/.gen/dal_1/model"
+	"github.com/runkits/gorm/tests/.gen/dal_1/model"
 )
 
 func newPerson(db *gorm.DB, opts ...gen.DOOption) person {

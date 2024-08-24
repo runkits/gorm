@@ -14,12 +14,12 @@ import (
 	"gorm.io/gorm/schema"
 
 	"gorm.io/gen"
-	"gorm.io/gen/field"
-	"gorm.io/gen/helper"
+	"github.com/runkits/gorm/field"
+	"github.com/runkits/gorm/helper"
 
 	"gorm.io/plugin/dbresolver"
 
-	"gorm.io/gen/tests/.gen/dal_4/model"
+	"github.com/runkits/gorm/tests/.gen/dal_4/model"
 
 	"time"
 )
