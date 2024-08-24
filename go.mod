@@ -1,4 +1,4 @@
-module gorm.io/gen
+module github.com/runkits/gorm
 
 go 1.18
 

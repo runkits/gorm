@@ -1,4 +1,4 @@
-module gorm.io/gen/tools/gentool
+module github.com/runkits/gorm/tools/gentool
 
 go 1.19
 

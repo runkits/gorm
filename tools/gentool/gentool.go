@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"gorm.io/gorm/schema"
 	"log"
 	"os"
 	"strings"
@@ -36,6 +37,7 @@ const (
 type CmdParams struct {
 	DSN               string   `yaml:"dsn"`               // consult[https://gorm.io/docs/connecting_to_the_database.html]"
 	DB                string   `yaml:"db"`                // input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
+	TablePrefix       string   `yaml:"tablePrefix"`       // input table prefix or leave it blank
 	Tables            []string `yaml:"tables"`            // enter the required data table or leave it blank
 	OnlyModel         bool     `yaml:"onlyModel"`         // only generate model
 	OutPath           string   `yaml:"outPath"`           // specify a directory for output
@@ -143,6 +145,7 @@ func argParse() *CmdParams {
 	genPath := flag.String("c", "", "is path for gen.yml")
 	dsn := flag.String("dsn", "", "consult[https://gorm.io/docs/connecting_to_the_database.html]")
 	db := flag.String("db", string(dbMySQL), "input mysql|postgres|sqlite|sqlserver|clickhouse. consult[https://gorm.io/docs/connecting_to_the_database.html]")
+	tablePrefix := flag.String("tablePrefix", "", "input table prefix or leave it blank")
 	tableList := flag.String("tables", "", "enter the required data table or leave it blank")
 	onlyModel := flag.Bool("onlyModel", false, "only generate models (without query file)")
 	outPath := flag.String("outPath", defaultQueryPath, "specify a directory for output")
@@ -167,6 +170,9 @@ func argParse() *CmdParams {
 	}
 	if *db != "" {
 		cmdParse.DB = *db
+	}
+	if *tablePrefix != "" {
+		cmdParse.TablePrefix = *tablePrefix
 	}
 	if *tableList != "" {
 		cmdParse.Tables = strings.Split(*tableList, ",")
@@ -227,6 +233,16 @@ func main() {
 		FieldWithTypeTag:  config.FieldWithTypeTag,
 		FieldSignable:     config.FieldSignable,
 	})
+
+	tablePrefix := config.TablePrefix
+
+	g.WithFileNameStrategy(func(tableName string) string {
+		return strings.TrimPrefix(tableName, tablePrefix)
+	})
+
+	db.NamingStrategy = schema.NamingStrategy{
+		TablePrefix: tablePrefix,
+	}
 
 	g.UseDB(db)
 
