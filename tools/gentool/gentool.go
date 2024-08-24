@@ -35,20 +35,22 @@ const (
 
 // CmdParams is command line parameters
 type CmdParams struct {
-	DSN               string   `yaml:"dsn"`               // consult[https://gorm.io/docs/connecting_to_the_database.html]"
-	DB                string   `yaml:"db"`                // input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
-	TablePrefix       string   `yaml:"tablePrefix"`       // input table prefix or leave it blank
-	Tables            []string `yaml:"tables"`            // enter the required data table or leave it blank
-	OnlyModel         bool     `yaml:"onlyModel"`         // only generate model
-	OutPath           string   `yaml:"outPath"`           // specify a directory for output
-	OutFile           string   `yaml:"outFile"`           // query code file name, default: gen.go
-	WithUnitTest      bool     `yaml:"withUnitTest"`      // generate unit test for query code
-	ModelPkgName      string   `yaml:"modelPkgName"`      // generated model code's package name
-	FieldNullable     bool     `yaml:"fieldNullable"`     // generate with pointer when field is nullable
-	FieldCoverable    bool     `yaml:"fieldCoverable"`    // generate with pointer when field has default value
-	FieldWithIndexTag bool     `yaml:"fieldWithIndexTag"` // generate field with gorm index tag
-	FieldWithTypeTag  bool     `yaml:"fieldWithTypeTag"`  // generate field with gorm column type tag
-	FieldSignable     bool     `yaml:"fieldSignable"`     // detect integer field's unsigned type, adjust generated data type
+	DSN               string           `yaml:"dsn"`               // consult[https://gorm.io/docs/connecting_to_the_database.html]"
+	DB                string           `yaml:"db"`                // input mysql or postgres or sqlite or sqlserver. consult[https://gorm.io/docs/connecting_to_the_database.html]
+	TablePrefix       string           `yaml:"tablePrefix"`       // enter the table prefix or leave it blank
+	Tables            []string         `yaml:"tables"`            // enter the required data table or leave it blank
+	OnlyModel         bool             `yaml:"onlyModel"`         // only generate model
+	OutPath           string           `yaml:"outPath"`           // specify a directory for output
+	OutFile           string           `yaml:"outFile"`           // query code file name, default: gen.go
+	WithUnitTest      bool             `yaml:"withUnitTest"`      // generate unit test for query code
+	ModelPkgName      string           `yaml:"modelPkgName"`      // generated model code's package name
+	FieldNullable     bool             `yaml:"fieldNullable"`     // generate with pointer when field is nullable
+	FieldCoverable    bool             `yaml:"fieldCoverable"`    // generate with pointer when field has default value
+	FieldWithIndexTag bool             `yaml:"fieldWithIndexTag"` // generate field with gorm index tag
+	FieldWithTypeTag  bool             `yaml:"fieldWithTypeTag"`  // generate field with gorm column type tag
+	FieldSignable     bool             `yaml:"fieldSignable"`     // detect integer field's unsigned type, adjust generated data type
+	Mode              []string         `yaml:"mode"`              // enter the generate modes or leave it blank
+	GenerateMode      gen.GenerateMode // generate modes
 }
 
 func (c *CmdParams) revise() *CmdParams {
@@ -74,6 +76,7 @@ func (c *CmdParams) revise() *CmdParams {
 		tableList = append(tableList, _tableName)
 	}
 	c.Tables = tableList
+	c.GenerateMode = parseMode(c.Mode...)
 	return c
 }
 
@@ -145,7 +148,7 @@ func argParse() *CmdParams {
 	genPath := flag.String("c", "", "is path for gen.yml")
 	dsn := flag.String("dsn", "", "consult[https://gorm.io/docs/connecting_to_the_database.html]")
 	db := flag.String("db", string(dbMySQL), "input mysql|postgres|sqlite|sqlserver|clickhouse. consult[https://gorm.io/docs/connecting_to_the_database.html]")
-	tablePrefix := flag.String("tablePrefix", "", "input table prefix or leave it blank")
+	tablePrefix := flag.String("tablePrefix", "", "enter the table prefix or leave it blank")
 	tableList := flag.String("tables", "", "enter the required data table or leave it blank")
 	onlyModel := flag.Bool("onlyModel", false, "only generate models (without query file)")
 	outPath := flag.String("outPath", defaultQueryPath, "specify a directory for output")
@@ -157,6 +160,7 @@ func argParse() *CmdParams {
 	fieldWithIndexTag := flag.Bool("fieldWithIndexTag", false, "generate field with gorm index tag")
 	fieldWithTypeTag := flag.Bool("fieldWithTypeTag", false, "generate field with gorm column type tag")
 	fieldSignable := flag.Bool("fieldSignable", false, "detect integer field's unsigned type, adjust generated data type")
+	mode := flag.String("mode", "", "enter the generate modes or leave it blank")
 	flag.Parse()
 
 	if *genPath != "" { //use yml config
@@ -207,7 +211,28 @@ func argParse() *CmdParams {
 	if *fieldSignable {
 		cmdParse.FieldSignable = *fieldSignable
 	}
+	if *mode != "" {
+		cmdParse.Mode = strings.Split(*mode, ",")
+	}
 	return &cmdParse
+}
+
+func parseMode(modes ...string) gen.GenerateMode {
+	if len(modes) == 0 {
+		return gen.GenerateMode(0)
+	}
+	var generateMode gen.GenerateMode
+	for _, mode := range modes {
+		switch mode {
+		case "WithDefaultQuery":
+			generateMode |= gen.WithDefaultQuery
+		case "WithoutContext":
+			generateMode |= gen.WithoutContext
+		case "WithQueryInterface":
+			generateMode |= gen.WithQueryInterface
+		}
+	}
+	return generateMode
 }
 
 func main() {
@@ -232,6 +257,7 @@ func main() {
 		FieldWithIndexTag: config.FieldWithIndexTag,
 		FieldWithTypeTag:  config.FieldWithTypeTag,
 		FieldSignable:     config.FieldSignable,
+		Mode:              config.GenerateMode,
 	})
 
 	tablePrefix := config.TablePrefix
