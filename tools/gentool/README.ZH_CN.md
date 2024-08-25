@@ -7,7 +7,7 @@
 ## 安装
 
 ```shell
- go install gorm.io/gen/tools/gentool@latest
+ go install github.com/runkits/gorm/tools/gentool@latest
 ```
 
 ## 使用方式
@@ -35,6 +35,8 @@
         query code file name, default: gen.go
   -outPath string
         specify a directory for output (default "./dao/query")
+  -tablePrefix string
+        enter the table prefix or leave it blank
   -tables string
         enter the required data table or leave it blank
   -onlyModel
@@ -43,6 +45,8 @@
         generate unit test for query code
   -fieldSignable
         detect integer field's unsigned type, adjust generated data type
+  -mode string
+        enter the generate modes or leave it blank
 
 ```
 
@@ -100,6 +104,10 @@ default ""
 
 指定输出目录
 
+#### tablePrefix
+
+值为 : 输入数据表前缀或将其留空
+
 #### tables
 
 值为 : 输入所需的数据表或将其留空
@@ -122,10 +130,20 @@ eg :
 
 #### fieldSignable
 
-Value : False / True
+值为 : False / True
 
 基于数据表定义的数据类型，生成对应的数据类型
 
+#### mode
+值为 : 输入生成模式或将其留空
+
+eg :
+
+​       --mode="WithDefaultQuery" # 生成模式
+
+​       --mode="WithDefaultQuery,WithQueryInterface" # 生成模式
+
+​       --mode="WithDefaultQuery,WithQueryInterface,WithoutContext" # 生成模式
 
 ### 使用示例
 

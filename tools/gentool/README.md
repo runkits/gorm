@@ -5,7 +5,7 @@ Install GEN as a binary tool
 ## install
 
 ```shell
- go install gorm.io/gen/tools/gentool@latest
+ go install github.com/runkits/gorm/tools/gentool@latest
 ```
 
 ## usage
@@ -41,6 +41,8 @@ Install GEN as a binary tool
         generate unit test for query code
   -fieldSignable
         detect integer field's unsigned type, adjust generated data type
+  -mode string
+        enter the generate modes or leave it blank
 
 ```
 #### c
@@ -94,6 +96,10 @@ defalut table name.
 
 specify a directory for output (default "./dao/query")
 
+#### tablePrefix
+
+Value : enter the table prefix or leave it blank.
+
 #### tables
 
 Value : enter the required data table or leave it blank.
@@ -120,7 +126,16 @@ Value : False / True
 
 detect integer field's unsigned type, adjust generated data type
 
+#### mode
+Value : enter the generate modes or leave it blank.
 
+eg :
+
+​       --mode="WithDefaultQuery" # generate mode
+
+​       --mode="WithDefaultQuery,WithQueryInterface" # generate mode
+
+​       --mode="WithDefaultQuery,WithQueryInterface,WithoutContext" # generate mode
 
 ### example
 
