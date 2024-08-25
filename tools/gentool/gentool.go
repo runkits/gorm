@@ -163,11 +163,13 @@ func argParse() *CmdParams {
 	mode := flag.String("mode", "", "enter the generate modes or leave it blank")
 	flag.Parse()
 
+	var cmdParse CmdParams
+
+	// default is yml config
 	if *genPath != "" { //use yml config
-		return parseCmdFromYaml(*genPath)
+		cmdParse = *parseCmdFromYaml(*genPath)
 	}
 
-	var cmdParse CmdParams
 	// cmd first
 	if *dsn != "" {
 		cmdParse.DSN = *dsn
@@ -184,7 +186,7 @@ func argParse() *CmdParams {
 	if *onlyModel {
 		cmdParse.OnlyModel = true
 	}
-	if *outPath != "" {
+	if *outPath != "./dao/query" || cmdParse.OutPath == "" {
 		cmdParse.OutPath = *outPath
 	}
 	if *outFile != "" {
