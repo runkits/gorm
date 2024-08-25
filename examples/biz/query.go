@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/runkits/gorm/examples/dal/query"
+	"gorm.io/gen/examples/dal/query"
 )
 
 var q = query.Q

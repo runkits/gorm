@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/runkits/gorm/field"
 	"gorm.io/gen"
+	"gorm.io/gen/field"
 
-	"github.com/runkits/gorm/tests/diy_method"
+	"gorm.io/gen/tests/diy_method"
 )
 
 const (

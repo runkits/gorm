@@ -3,18 +3,19 @@ package main
 import (
 	"flag"
 	"fmt"
-	"gorm.io/gorm/schema"
 	"log"
 	"os"
 	"strings"
 
+	"gorm.io/gorm/schema"
+
+	gen "github.com/runkits/gorm"
 	"gopkg.in/yaml.v3"
 	"gorm.io/driver/clickhouse"
 	"gorm.io/driver/mysql"
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/driver/sqlserver"
-	"gorm.io/gen"
 	"gorm.io/gorm"
 )
 

@@ -10,8 +10,8 @@ import (
 	"testing"
 
 	"gorm.io/gen"
-	"github.com/runkits/gorm/field"
-	"github.com/runkits/gorm/tests/.gen/dal_3/model"
+	"gorm.io/gen/field"
+	"gorm.io/gen/tests/.expect/dal_3/model"
 	"gorm.io/gorm/clause"
 )
 

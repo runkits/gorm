@@ -4,7 +4,7 @@ import (
 	"context"
 	"sync"
 
-	"github.com/runkits/gorm/tests/.expect/dal_test/query"
+	"gorm.io/gen/tests/.expect/dal_test/query"
 )
 
 var useOnce sync.Once

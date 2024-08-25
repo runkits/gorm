@@ -3,8 +3,8 @@ package tests_test
 import (
 	"testing"
 
-	"github.com/runkits/gorm/tests/.expect/dal_test/model"
-	"github.com/runkits/gorm/tests/.expect/dal_test/query"
+	"gorm.io/gen/tests/.expect/dal_test/model"
+	"gorm.io/gen/tests/.expect/dal_test/query"
 )
 
 func TestQuery_Find(t *testing.T) {

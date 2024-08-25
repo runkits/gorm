@@ -10,10 +10,10 @@ import (
 	"gorm.io/gorm/schema"
 	"gorm.io/gorm/utils/tests"
 
-	"github.com/runkits/gorm/field"
-	"github.com/runkits/gorm/helper"
 	"github.com/runkits/gorm/internal/model"
 	"github.com/runkits/gorm/internal/parser"
+	"github.com/runkits/gorm/field"
+	"github.com/runkits/gorm/helper"
 )
 
 // GetQueryStructMeta generate db model by table name

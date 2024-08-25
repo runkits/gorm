@@ -12,11 +12,11 @@ import (
 	"gorm.io/gorm/schema"
 
 	"gorm.io/gen"
-	"github.com/runkits/gorm/field"
+	"gorm.io/gen/field"
 
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/runkits/gorm/tests/.expect/dal_test/model"
+	"gorm.io/gen/tests/.expect/dal_test/model"
 )
 
 func newBank(db *gorm.DB) bank {

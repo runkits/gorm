@@ -3,15 +3,17 @@ module github.com/runkits/gorm/tools/gentool
 go 1.19
 
 require (
+	github.com/runkits/gorm v0.3.26
 	gopkg.in/yaml.v3 v3.0.1
 	gorm.io/driver/clickhouse v0.6.0
 	gorm.io/driver/mysql v1.5.6
 	gorm.io/driver/postgres v1.5.7
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/driver/sqlserver v1.5.3
-	gorm.io/gen v0.3.26
 	gorm.io/gorm v1.25.9
 )
+
+replace github.com/runkits/gorm => ../../
 
 require (
 	github.com/ClickHouse/ch-go v0.58.2 // indirect
