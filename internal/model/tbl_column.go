@@ -125,18 +125,25 @@ func (c *Column) buildGormTag() field.GormTag {
 
 // needDefaultTag check if default tag needed
 func (c *Column) needDefaultTag(defaultTagValue string) bool {
-	if defaultTagValue == "" {
-		return false
+	// if defaultTagValue == "" {
+	// 	return false
+	// }
+	if defaultTagValue == "''" {
+		return true
 	}
 	switch c.ScanType().Kind() {
 	case reflect.Bool:
-		return defaultTagValue != "false"
+		// return defaultTagValue != "false"
+		return true
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Float32, reflect.Float64:
-		return defaultTagValue != "0"
+		// return defaultTagValue != "0"
+		return true
 	case reflect.String:
-		return defaultTagValue != ""
+		// return defaultTagValue != ""
+		return true
 	case reflect.Struct:
 		return strings.Trim(defaultTagValue, "'0:- ") != ""
+	default:
 	}
 	return c.Name() != "created_at" && c.Name() != "updated_at"
 }
@@ -150,11 +157,24 @@ func (c *Column) defaultTagValue() string {
 	if value != "" && strings.TrimSpace(value) == "" {
 		return "'" + value + "'"
 	}
+	if value == "" {
+		return "''"
+	}
 	return value
 }
 
 func (c *Column) columnType() (v string) {
 	if cl, ok := c.ColumnType.ColumnType(); ok {
+		// fix: fix blob binary type error
+		if strings.HasSuffix(cl, "blob binary") {
+			cl = strings.ReplaceAll(cl, "blob binary", "blob")
+		}
+		// fix: fix varbinary type error
+		if strings.Contains(cl, "varbinary") {
+			if strings.Contains(cl, " binary") {
+				cl = strings.ReplaceAll(cl, " binary", "")
+			}
+		}
 		return cl
 	}
 	return c.DatabaseTypeName()
